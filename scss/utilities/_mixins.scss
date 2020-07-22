@@ -1,0 +1,19 @@
+@import './variables';
+
+@mixin mq-mobile {
+  @media screen and (max-width: $mobile-l) {
+    @content;
+  }
+}
+
+@mixin mq-tablet {
+  @media screen and (min-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin mq-laptop {
+  @media screen and (min-width: $laptop-s) {
+    @content;
+  }
+}
