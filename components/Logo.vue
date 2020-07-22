@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Logo from '~/assets/logo.svg?inline'
+// import Logo from '~/assets/logo.svg?inline'
 export default {
   name: 'logo',
-  components: { Logo },
+  // components: { Logo },
 }
 </script>
 

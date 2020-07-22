@@ -75,6 +75,7 @@ export default class DrawController {
     this.ctx.rotate(d2r(this.data.clippingMask.rotation))
 
     //draw clipping mask
+    //TODO: fix this
     this.ctx.fillStyle = '#fff'
     this.ctx.beginPath()
     this.ctx.rect(
