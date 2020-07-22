@@ -1,12 +1,12 @@
 <template>
-  <div class="transition-clip"></div>
+  <div class="transition-clip">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'transition-clip',
-  props: [],
-  mounted: function () {},
 }
 </script>
 
@@ -22,11 +22,13 @@ export default {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   z-index: 2;
-  transition: clip-path 1s ease;
-
-  &.in {
+  &.transition-in {
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path 1.38s cubic-bezier(0.62, 0, 0.15, 1);
+  }
+  &.transition-out {
+    display: none;
   }
 }
 </style>

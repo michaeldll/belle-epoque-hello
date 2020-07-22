@@ -36,10 +36,6 @@ export default {
    */
   plugins: [
     {
-      src: '~/plugins/locomotive.js',
-      ssr: false,
-    },
-    {
       src: '~/plugins/eventEmitter.js',
       ssr: false,
     },

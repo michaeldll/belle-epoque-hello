@@ -3,9 +3,14 @@
 </template>
 
 <script>
+import CanvasController from '~/classes/controllers/CanvasController'
+
 export default {
   name: 'canvas-component',
   props: ['id'],
+  mounted(){
+    const controller = new CanvasController({width: 100, height:100, id=this.$id})
+  }
 }
 </script>
 

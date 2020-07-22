@@ -1,5 +1,5 @@
 <template>
-  <h3 v-bind:class="className">
+  <h3>
     <slot></slot>
   </h3>
 </template>
@@ -7,12 +7,12 @@
 <script>
 export default {
   name: 'subtitle',
-  props: ['className'],
 }
 </script>
 
 <style scoped lang="scss">
 h3 {
+  z-index: 2;
   &.white {
     color: #fff;
   }
