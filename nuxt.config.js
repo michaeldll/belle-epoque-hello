@@ -39,6 +39,14 @@ export default {
       src: '~/plugins/locomotive.js',
       ssr: false,
     },
+    {
+      src: '~/plugins/eventEmitter.js',
+      ssr: false,
+    },
+    {
+      src: '~/plugins/datGUI.js',
+      ssr: false,
+    },
   ],
   /*
    ** Auto import components

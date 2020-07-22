@@ -1,9 +1,9 @@
 <template>
   <Container>
     <div class="debug d-flex flex-column">
-      <Button @click="onTransitionClick">transition</Button>
-      <div class="my-1" />
-      <Button @click="onScrollToTopClick">scroll to top</Button>
+      <Button class="my-1" @click="onTransitionClick">transition</Button>
+      <Button class="my-1" @click="onScrollToTopClick">scroll to top</Button>
+      <Button class="my-1" @click="onAnimateTextClick">animate text</Button>
     </div>
     <TransitionClip />
     <Container data-scroll-container>
@@ -17,13 +17,15 @@
         data-scroll-section
         class="d-flex justify-content-center align-items-center flex-column"
       >
-        <Container class="vw-100">
-          <h1>title here</h1>
-          <Canvas id="bg-anim" />
+        <Container
+          class="vw-100 vh-50 d-flex justify-content-center align-items-center flex-column"
+        >
+          <AnimatedLetters />
+          <Canvas id="bg" />
         </Container>
         <article data-scroll data-scroll-speed="2">
           <img height="400px" src="~/assets/milou.jpg" />
-          <Subtitle className="black">subtitle here</Subtitle>
+          <Subtitle class="black">subtitle here</Subtitle>
         </article>
         <section class="d-grid grid-columns-2">
           <article class="px-2">
@@ -33,7 +35,7 @@
               data-scroll-speed="1"
               src="~/assets/milou.jpg"
             />
-            <Subtitle className="black" data-scroll data-scroll-speed="1"
+            <Subtitle class="black" data-scroll data-scroll-speed="1"
               >subtitle here</Subtitle
             >
           </article>
@@ -44,14 +46,14 @@
               data-scroll-speed="1"
               src="~/assets/milou.jpg"
             />
-            <Subtitle className="black" data-scroll data-scroll-speed="1"
+            <Subtitle class="black" data-scroll data-scroll-speed="1"
               >subtitle here</Subtitle
             >
           </article>
         </section>
       </main>
       <Footer data-scroll-section>
-        <Subtitle className="white">
+        <Subtitle class="white">
           developpé par
           <a href="https://michaels.works">Michael de Laborde</a>
         </Subtitle>
@@ -75,6 +77,23 @@ export default {
     onScrollToTopClick: function (e) {
       this.lmS.scrollTo(document.querySelector('header'))
     },
+    onAnimateTextClick: function (e) {
+      const letters = document.querySelectorAll('.animated-letters > span')
+      const animationLength = 2350
+      letters.forEach((letter, i) => {
+        if (letter && letter.classList.contains('animate-in')) {
+          letter.classList.add('animate-out')
+          letter.classList.remove('animate-in')
+          //reset
+          setTimeout(() => {
+            letter.classList.remove('animate-out')
+          }, animationLength)
+        } else if (letter && !letter.classList.contains('animate-in')) {
+          letter.classList.add('animate-in')
+          letter.classList.remove('animate-out')
+        }
+      })
+    },
     toggleTransition: function () {
       document.querySelector('.transition-clip').classList.toggle('in')
     },
@@ -89,8 +108,8 @@ a {
 .debug {
   position: absolute;
   right: 3%;
-  top: 50%;
-  transform: translate(0, -50%);
+  top: 25%;
+  transform: translate(0, -25%);
   z-index: 3;
 }
 main {

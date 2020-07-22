@@ -23,6 +23,10 @@ html {
   box-sizing: border-box;
 }
 
+.dg.ac {
+  z-index: 10 !important;
+}
+
 *,
 *::before,
 *::after {

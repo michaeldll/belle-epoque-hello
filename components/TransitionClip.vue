@@ -1,12 +1,10 @@
 <template>
-  <div class="transition-clip">
-    <div class="transition-clip__background" />
-  </div>
+  <div class="transition-clip"></div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'transition-clip',
   props: [],
   mounted: function () {},
 }

@@ -1,5 +1,5 @@
 <template>
-  <section v-bind:class="className">
+  <section>
     <slot></slot>
   </section>
 </template>
@@ -7,7 +7,6 @@
 <script>
 export default {
   name: 'container',
-  props: ['className'],
 }
 </script>
 
