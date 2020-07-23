@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import gsap from 'gsap'
 import config from '~/utils/config'
 
 //haven't found a way to access this.$data in methods, so this'll do
