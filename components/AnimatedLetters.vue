@@ -28,7 +28,7 @@ export default {
 
   & > div {
     position: relative;
-    width: 14%;
+    width: 109px;
     height: 100%;
 
     //sorry
