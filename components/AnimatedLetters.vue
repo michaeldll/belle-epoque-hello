@@ -39,7 +39,7 @@ export default {
 
     & > span {
       position: absolute;
-      bottom: 0;
+      bottom: -200%;
       opacity: 0;
       transform: rotate3d(1, 1, 0, -90deg);
       font-size: 165px;
@@ -57,12 +57,13 @@ export default {
         bottom: 25%;
         transform: rotate3d(1, 1, 0, 0deg);
       }
+
       &.transition-out {
         transition: transform 2.35s cubic-bezier(0.33, 0, 0, 1),
           opacity 2.35s cubic-bezier(0.33, 0, 0, 1),
           bottom 2.35s cubic-bezier(0.33, 0, 0, 1);
 
-        bottom: 100%;
+        bottom: 200%;
         opacity: 0;
         transform: rotate3d(1, 1, 0, -90deg);
       }

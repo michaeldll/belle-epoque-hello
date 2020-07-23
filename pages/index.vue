@@ -7,6 +7,12 @@
       <Subtitle class="white">👋 Hello Purée Maison! 👋</Subtitle>
     </TransitionClip>
     <Slider />
+    <div
+      class="ending d-flex flex-column justify-content-center align-items-center"
+    >
+      <Subtitle class="black">Fin.</Subtitle>
+      <Button class="my-1" @click="onRestart">🔁?</Button>
+    </div>
   </Container>
 </template>
 
@@ -34,27 +40,40 @@ export default {
     scrollController.init()
 
     //hello Purée Maison ! j'espère que ça va plaire 😇
+    const initialDelay = 600
     setTimeout(() => {
-      this.toggleTransitionClip(0)
+      this.toggleTransitionClip(0, true)
+      const animationDelay = 1380
       setTimeout(() => {
-        this.toggleTransitionClip(0)
-      }, 400)
-    }, 600)
+        this.toggleTransitionClip(0, false)
+      }, animationDelay)
+    }, initialDelay)
   },
   methods: {
     //toggles classes in the appropriate transition clip element
-    toggleTransitionClip: function (index) {
+    /**
+     * @param {Number} index
+     * @param {Boolean} mode
+     */
+    toggleTransitionClip: function (index, mode) {
       const transitionClipElements = document.querySelectorAll(
         '.transition-clip'
       )
       transitionClipElements.forEach((clip, i) => {
         if (clip)
           if (i === index) {
-            !clip.classList.contains('in')
-              ? clip.classList.add('transition-in')
-              : clip.classList.add('transition-out')
+            if (mode) {
+              clip.classList.remove('transition-out')
+              clip.classList.add('transition-in')
+            } else {
+              clip.classList.add('transition-out')
+              clip.classList.remove('transition-in')
+            }
           }
       })
+    },
+    onRestart: function () {
+      document.location.reload()
     },
   },
 }
@@ -74,5 +93,22 @@ export default {
 //the following class applies to DAT.GUI parent element
 .dg.ac {
   z-index: 10 !important;
+}
+
+.ending {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9;
+  background: #f9d586;
+  &.show {
+    transition: opacity ease-in-out 1s;
+    opacity: 1;
+    visibility: visible;
+  }
 }
 </style>

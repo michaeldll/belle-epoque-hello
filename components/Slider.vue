@@ -1,6 +1,6 @@
 <template>
   <Container class="slider">
-    <article class="slider__slide vw-100 vh-100 show">
+    <article class="slider__slide">
       <div class="top-left slider__slide__title">
         <h1>Front Dev.</h1>
       </div>
@@ -21,7 +21,7 @@
     </article>
 
     <article
-      class="slider__slide vw-100 vh-100 d-flex justify-content-center align-items-center"
+      class="slider__slide d-flex justify-content-center align-items-center"
     >
       <AnimatedLetters>
         <div>
@@ -61,13 +61,13 @@
         class="slider__slide__image"
       />
       <img
-        src="/images/optimized/Sans titre-8.jpg"
+        src="/images/optimized/IMAGE.jpg"
         class="slider__slide__background"
       />
     </article>
 
     <article
-      class="slider__slide vw-100 vh-100 d-flex justify-content-center align-items-center"
+      class="slider__slide d-flex justify-content-center align-items-center"
     >
       <AnimatedLetters>
         <div>
@@ -107,7 +107,7 @@
         class="slider__slide__image"
       />
       <img
-        src="/images/optimized/IMAGE.jpg"
+        src="/images/optimized/Sans titre-8.jpg"
         class="slider__slide__background"
       />
     </article>
@@ -116,6 +116,9 @@
 
 <script>
 import config from '~/utils/config'
+
+//haven't found a way to access this.$data in methods, so this'll do
+let currentSlideIndex = 0
 
 export default {
   mounted: function () {
@@ -127,33 +130,78 @@ export default {
     })
   },
   methods: {
-    //adds classes to the appropriate slide element
-    goToSlide: function (slideIndex) {
-      const slideElements = document.querySelectorAll('.slider .slider__slide')
-      slideElements.forEach((slide, i) => {
-        if (!slide) return
-        else {
-          if (i === slideIndex && !slide.classList.contains('transition-in')) {
-            //transition in slide
-            slide.classList.add('transition-in')
-            //transition in text
-            slide
-              .querySelectorAll('.animated-letters > div > span')
-              .forEach((letter, i) => {
-                letter.classList.add('transition-in')
-              })
-            //transition out previous slide
-            Array.from(slideElements).find((slide, i) => {
-              if (
-                i === slideIndex - 1 &&
-                slide.classList.contains('transition-in')
-              ) {
-                slide.classList.add('transition-out')
-              }
-            })
-          }
+    /**
+     * @param {Number} nextSlideIndex
+     */
+    goToSlide: function (nextSlideIndex) {
+      //cache all slide elements
+      const slideElements = Array.from(
+        document.querySelectorAll('.slider .slider__slide')
+      )
+
+      //adds classes to the appropriate slide element(s) at the right time
+      const toggleTransition = (slideIndex, mode) => {
+        const letterDelay = 100
+        if (mode) {
+          slideElements[slideIndex].classList.add('transition-in')
+        } else {
+          slideElements[slideIndex].classList.add('transition-out')
         }
-      })
+        slideElements[slideIndex]
+          .querySelectorAll('.animated-letters > div > span')
+          .forEach((letter, i) => {
+            setTimeout(() => {
+              if (mode) {
+                letter.classList.add('transition-in')
+              } else {
+                letter.classList.add('transition-out')
+              }
+            }, letterDelay * i)
+          })
+      }
+
+      const slideFromZeroToOne = () => {
+        toggleTransition(1, true)
+      }
+
+      const slideFromOneToTwo = () => {
+        toggleTransition(1, false)
+        toggleTransition(2, true)
+      }
+
+      const slideFromTwoToZero = () => {
+        toggleTransition(2, false)
+        const delay = 2000
+        setTimeout(() => {
+          document.querySelector('.ending').classList.add('show')
+        }, delay)
+      }
+
+      switch (currentSlideIndex) {
+        case 0:
+          if (nextSlideIndex === 1) {
+            slideFromZeroToOne()
+            currentSlideIndex++
+          }
+          break
+
+        case 1:
+          if (nextSlideIndex === 2) {
+            slideFromOneToTwo()
+            currentSlideIndex++
+          }
+          break
+
+        case 2:
+          if (nextSlideIndex === 0) {
+            slideFromTwoToZero()
+            currentSlideIndex = 0
+          }
+          break
+
+        default:
+          break
+      }
     },
   },
 }
@@ -183,7 +231,7 @@ export default {
   }
   .slider__slide {
     position: absolute;
-
+    overflow: hidden;
     left: 0;
     top: 0;
     width: 100%;
@@ -193,14 +241,10 @@ export default {
     &:nth-of-type(1) {
       z-index: 0;
       background: black;
-      transition: transform 2.46s cubic-bezier(0.76, 0, 0.13, 0.99);
+      //   transition: transform 2.46s cubic-bezier(0.76, 0, 0.13, 0.99);
 
       & > div {
         padding: 40px;
-      }
-
-      &.show {
-        opacity: 1;
       }
 
       h1,
@@ -234,26 +278,30 @@ export default {
     &:nth-of-type(2) {
       z-index: 1;
       background: $red;
+      transform: translate(0, 151vh) rotate(-26deg);
 
-      &:not(.transition-in) {
-        transform: translate(0, 100vh);
-        .slider__slide__image {
-          transform: translate(0, 100vh);
-        }
-      }
       &.transition-in {
         transition: transform 2.46s cubic-bezier(0.76, 0, 0.13, 0.99);
-        transform: translate(0, 0);
+        transform: translate(0, 0) rotate(0deg);
         .slider__slide__image {
           transition: transform 2.05s cubic-bezier(0.63, 0, 0.39, 1) 1.05s;
           transform: translate(0, 0);
         }
+        .slider__slide__background {
+          transition: transform 2.46s cubic-bezier(0.6, 0, 0.39, 1);
+          transform: scale(1.71) rotate(0deg);
+        }
       }
       &.transition-out {
-        transform: translate(0, -100vh);
+        transition: transform 1s ease-in-out 3.22s;
+        transform: translate(0, -151vh);
         .slider__slide__image {
-          transition: transform 2.05s cubic-bezier(0.63, 0, 0.39, 1) 1.05s;
+          transition: transform 3.09 cubic-bezier(0.63, 0, 0.23, 1);
           transform: translate(0, -100vh);
+        }
+        .slider__slide__background {
+          transition: transform 3.22 cubic-bezier(0.67, 0, 0.2, 1);
+          transform: scale(3.06) rotate(-71deg);
         }
       }
       .slider__slide__title {
@@ -265,37 +313,43 @@ export default {
       }
       .slider__slide__image {
         z-index: 1;
+        transform: translate(0, 100vh);
+      }
+      .slider__slide__background {
+        opacity: 49%;
+        transform: scale(3.06) rotate(-71deg);
       }
     }
 
     //third slide
     &:nth-of-type(3) {
       z-index: 2;
-      &:not(.transition-in) {
-        transform: translate(0, 100vh);
-        .slider__slide__image {
-          transform: translate(0, 100vh);
-        }
-      }
+      background: $red;
+      transform: translate(0, 151vh) rotate(-26deg);
+
       &.transition-in {
         transition: transform 2.46s cubic-bezier(0.76, 0, 0.13, 0.99);
-        transform: translate(0, 0);
+        transform: translate(0, 0) rotate(0deg);
         .slider__slide__image {
           transition: transform 2.05s cubic-bezier(0.63, 0, 0.39, 1) 1.05s;
           transform: translate(0, 0);
         }
-      }
-      &.transition-out {
-        transform: translate(0, -100vh);
-        .slider__slide__image {
-          transition: transform 2.05s cubic-bezier(0.63, 0, 0.39, 1) 1.05s;
-          transform: translate(0, -100vh);
+        .slider__slide__background {
+          transition: transform 2.46s cubic-bezier(0.6, 0, 0.39, 1);
+          transform: scale(1.71) rotate(0deg);
         }
       }
-      h1,
-      h2,
-      p {
-        color: #fff;
+      &.transition-out {
+        transition: transform 1s ease-in-out 3.22s;
+        transform: translate(0, -151vh);
+        .slider__slide__image {
+          transition: transform 3.09 cubic-bezier(0.63, 0, 0.23, 1);
+          transform: translate(0, -100vh);
+        }
+        .slider__slide__background {
+          transition: transform 3.22 cubic-bezier(0.67, 0, 0.2, 1);
+          transform: scale(3.06) rotate(-71deg);
+        }
       }
       .slider__slide__title {
         position: absolute;
@@ -306,6 +360,11 @@ export default {
       }
       .slider__slide__image {
         z-index: 1;
+        transform: translate(0, 100vh);
+      }
+      .slider__slide__background {
+        opacity: 49%;
+        transform: scale(3.06) rotate(-71deg);
       }
     }
 
@@ -317,8 +376,8 @@ export default {
     }
     .slider__slide__background {
       position: absolute;
-      width: 100.1vw; //100vw causes a white border
-      height: 100vh; //100vw causes a white border
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
     }
   }
