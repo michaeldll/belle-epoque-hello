@@ -316,7 +316,6 @@ export default {
         transform: translate(0, 100vh);
       }
       .slider__slide__background {
-        opacity: 49%;
         transform: scale(3.06) rotate(-71deg);
       }
     }
@@ -376,6 +375,7 @@ export default {
     }
     .slider__slide__background {
       position: absolute;
+      opacity: 50%;
       width: 100vw;
       height: 100vh;
       z-index: 0;
