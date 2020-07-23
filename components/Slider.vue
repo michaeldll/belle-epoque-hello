@@ -128,6 +128,14 @@ export default {
       if (config.devMode) console.log(scrollIndex)
       this.goToSlide(scrollIndex)
     })
+
+    //this fixes a Vercel deployment bug
+    const backgroundElements = Array.from(
+      document.querySelectorAll('.slider__slide__background')
+    )
+    console.log(backgroundElements)
+    backgroundElements[0].style.opacity = '49%'
+    backgroundElements[1].style.opacity = '50%'
   },
   methods: {
     /**
@@ -375,7 +383,6 @@ export default {
     }
     .slider__slide__background {
       position: absolute;
-      opacity: 50%;
       width: 100vw;
       height: 100vh;
       z-index: 0;
