@@ -5,7 +5,7 @@
         <h1>Front Dev.</h1>
       </div>
       <div class="top-right slider__slide__number">
-        <h2>Nº001</h2>
+        <h2>Nº002</h2>
       </div>
       <div class="bottom-left slider__slide__exercice">
         <h2>Exercice</h2>

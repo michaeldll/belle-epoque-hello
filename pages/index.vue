@@ -4,7 +4,7 @@
       <Button class="my-1" @click="onAnimateCanvas">onAnimateCanvas</Button>
     </div> -->
     <TransitionClip class="d-flex justify-content-center align-items-center">
-      <Subtitle class="white">👋 Hello Purée Maison! 👋</Subtitle>
+      <Subtitle class="white">👋 Hello Belle Époque! 👋</Subtitle>
     </TransitionClip>
     <Slider />
     <div
@@ -39,7 +39,7 @@ export default {
     scrollController.toggle(true)
     scrollController.init()
 
-    //hello Purée Maison ! j'espère que ça va plaire 😇
+    //hello Belle Époque ! j'espère que ça va plaire 😇
     const initialDelay = 600
     setTimeout(() => {
       this.toggleTransitionClip(0, true)
