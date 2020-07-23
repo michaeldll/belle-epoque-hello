@@ -133,7 +133,7 @@ export default {
     const backgroundElements = Array.from(
       document.querySelectorAll('.slider__slide__background')
     )
-    console.log(backgroundElements)
+
     backgroundElements[0].style.opacity = '49%'
     backgroundElements[1].style.opacity = '50%'
   },
@@ -179,7 +179,7 @@ export default {
 
       const slideFromTwoToZero = () => {
         toggleTransition(2, false)
-        const delay = 2000
+        const delay = 5000
         setTimeout(() => {
           document.querySelector('.ending').classList.add('show')
         }, delay)
